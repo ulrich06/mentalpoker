@@ -2,9 +2,8 @@
 
 // JavaScript Document
 // Constants
-var primeNumber = findPrimeNumber(1000,10000);
+var primeNumber = 7;//computePrimeNumber(1000,10000);
 var phi = primeNumber - 1;
-
 /**
 	computePrimeNumber
 	Compute a prime number ranged by a minimum and maximum value
@@ -84,4 +83,47 @@ var isPrime = function(num) {
             return false;
     }
     return true;
+}
+
+/**
+* Test if a number "a" is a squared modulo "q"
+* Parameters :
+*	a : (int) number to test
+*	q : (int) modulo
+*  Return :
+*	(int) 1 if a is a squared modulo
+*/
+
+var test_sq = function(a,q) {
+	return Math.pow(a, Math.floor((q-1)/2)) % q;
+}
+
+/**
+* Suffle function
+* Src : http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+* Parameter :
+*	array : (array) Array to shuffle
+* Return :
+*	A shuffled array
+*/
+var shuffle = function(array){
+	var currentIndex = array.length
+    , temporaryValue
+    , randomIndex
+    ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
 }
