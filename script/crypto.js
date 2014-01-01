@@ -1,10 +1,10 @@
-//TODO: Generating key
-
-// JavaScript Document
-// Constants
-var primeNumber = 7;//computePrimeNumber(1000,10000);
-var phi = primeNumber - 1;
-/**
+/*******************************************
+ * Crypto functions File
+ * Cyril Cecchinel, Matthieu Jimenez
+ * Polytech'Nice-Sophia - 2013
+ *******************************************/
+ 
+ /**
 	computePrimeNumber
 	Compute a prime number ranged by a minimum and maximum value
 	Parameters :
@@ -19,27 +19,43 @@ var computePrimeNumber = function(minimum, maximum){
 		number = Math.floor(Math.random() * maximum) + 1;
 	return number;
 }
+/**
+	bezout
+	Recursive function which return (g,x,y) / px+qy=g where g = gcd(p,q).
+Ref :	 http://en.wikipedia.org/wiki/Modular_multiplicative_inverse#Extended_Euclidean_algorithm
+	Return :
+		Array of bezout coefficients
+*/
+var bezout = function(p,q)
+{
+	if (p==0) return [q,0,1];
+	else
+		{
+			var result = bezout(q%p,p);
+			var g = result[0];
+			var y = result[1];
+			var x = result[2];
+			return [g, x-Math.floor(q/p)*y, y];
+		}
+}
 
 /**
-	invertMod
-	Compute inverse of a number modulo a prime using modular exponentiation
-	Parameters :
+	invmod
+	Inverse modulo of a mod q
+	Input :
 		a : (int) Number
-		p : (int) Prime number Modulo
+		q : (int) Modulo
 	Return :
-		(int) Inverse of a modulo p
+		(int) Inv. Mod of a mod q
 */
-var invertMod = function(a,p){
-	var ex = p-2;			
-	var result = 1;
-	while(ex > 0){
-		if (ex % 2 == 1){
-			result = (result*a) % p;
-		}
-		a = Math.pow(a,2) % p;
-		ex = ex / 2;
-	}
-	return result;
+var invmod = function(a,q)
+{
+	var result = bezout(a,q);
+	var g = result[0];
+	var x = result[1];
+	var y = result[2];
+	if (g !=1) return -1; else { var tmp = x%q; if (tmp < 0) return q + tmp; else return tmp; }
+	
 }
 
 /**
@@ -52,7 +68,7 @@ var invertMod = function(a,p){
 		(int) Encrypted data
 */
 var encrypt = function(data, key){
-	return Math.pow(data, key) % primeNumber;
+	return Math.pow(data, key) % PRIME_NUMBER;
 };
 
 /**
@@ -65,8 +81,8 @@ var encrypt = function(data, key){
 		(int) decrypted data
 */
 var decrypt = function(data, key){
-	return Math.pow(data, invertMod(key, primeNumber)) % primeNumber;
-}
+	return Math.pow(data, invmod(key, PRIME_NUMBER - 1)) % PRIME_NUMBER;
+};
 
 /**
 	isPrime
@@ -83,7 +99,7 @@ var isPrime = function(num) {
             return false;
     }
     return true;
-}
+};
 
 /**
 * Test if a number "a" is a squared modulo "q"
@@ -96,7 +112,7 @@ var isPrime = function(num) {
 
 var test_sq = function(a,q) {
 	return Math.pow(a, Math.floor((q-1)/2)) % q;
-}
+};
 
 /**
 * Suffle function
@@ -126,4 +142,22 @@ var shuffle = function(array){
   }
 
   return array;
-}
+};
+
+var gcd = function(x, y) {
+	while (y != 0) {
+		var z = x % y;
+		x = y;
+		y = z;
+	}
+	return x;
+};
+
+var computeKey = function(){
+	var tmp;
+	do {
+		tmp = Math.floor(Math.random() * (Math.sqrt(PRIME_NUMBER - 1))) + 1;
+	}
+	while (gcd(tmp, PRIME_NUMBER - 1) != 1 && tmp < 2);
+	return tmp;
+};
