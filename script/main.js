@@ -16,3 +16,6 @@
  
  // Mental Poker deck of cards
  var cards = [card1, card2, card3];
+ var requestObj = new Request("connect", [PRIME_NUMBER]);
+ 
+ 

@@ -5,10 +5,10 @@
  *******************************************/
 
 // Define Bob URL
-var SERVER_URL = "http://home.cecchinel.fr/mentalpoker/";
+const SERVER_URL = "server/webservice.php";
 
 // Compute prime number
-var PRIME_NUMBER = computePrimeNumber(10,25);
+var PRIME_NUMBER = computePrimeNumber(20);
 
 // Compute Alice key
 var ALICE_KEY = computeKey();

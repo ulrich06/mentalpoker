@@ -6,7 +6,22 @@
  *******************************************/
  
  function shuffleCards($cardsArray){
-
-	return 0; 
+	 return "TODO";
  }
+ 
+ function encrypt($value, $key, $primeNumber)
+ {
+	 return "TODO";
+ }
+ 
+ function decrypt($value, $key, $primeNumber)
+ {
+ 	 return "TODO";
+ }
+ 
+ function generateKey()
+ {
+	 return "TODO";
+ }
+ 
  ?>
