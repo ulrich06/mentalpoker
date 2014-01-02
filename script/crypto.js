@@ -156,8 +156,9 @@ var gcd = function(x, y) {
 var computeKey = function(){
 	var tmp;
 	do {
-		tmp = Math.floor(Math.random() * (Math.sqrt(PRIME_NUMBER - 1))) + 1;
+		tmp = Math.floor(Math.random() * (PRIME_NUMBER - 1));
+		console.log(tmp);
 	}
-	while (gcd(tmp, PRIME_NUMBER - 1) != 1 && tmp < 2);
+	while (gcd(tmp, PRIME_NUMBER - 1) != 1);
 	return tmp;
 };
