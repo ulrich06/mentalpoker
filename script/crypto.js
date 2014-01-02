@@ -38,7 +38,7 @@ var computePrimeNumber = function(maximum){
 		prime = randomChoose(numbers);
 	console.log("PRIME NUMBER : " + prime);
 	return prime;
-}
+};
 /**
 	bezout
 	Recursive function which return (g,x,y) / px+qy=g where g = gcd(p,q).
@@ -57,7 +57,7 @@ var bezout = function(p,q)
 			var x = result[2];
 			return [g, x-Math.floor(q/p)*y, y];
 		}
-}
+};
 
 /**
 	invmod
@@ -76,7 +76,7 @@ var invmod = function(a,q)
 	var y = result[2];
 	if (g !=1) return -1; else { var tmp = x%q; if (tmp < 0) return q + tmp; else return tmp; }
 	
-}
+};
 
 /**
 	encrypt
@@ -189,4 +189,4 @@ var randomChoose = function(array){
 	var element = array[index];
 	
 	return element;
-}
+};
