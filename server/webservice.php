@@ -30,16 +30,20 @@ switch($obj["name"]){
 		
 		$_SESSION['prime'] = $obj["parameters"]; // Store prime number
 		$_SESSION['key'] = generateKey(); // Compute Bob key
-		echo 'OK with prime number = ' . $_SESSION['prime'] . ' BOB TOP SECRET DEBUG ' . $_SESSION['key'];
+		echo 'OK';
 		break;
 	/*
 	* RECEIVE_CARDS cards_array
 	*/	
 	case "RECEIVE_CARDS";
-		if (!isset($_SESSION['prime']))	// Check if prime number defined
+		if (!isset($_SESSION['prime'])){	// Check if prime number defined
 			echo "Not prime number set";
-		if ($obj["parameters"] == "" || !isset($obj["parameters"])) // Check if a cards array is set
+			exit();
+		}
+		if ($obj["parameters"] == "" || !isset($obj["parameters"])){ // Check if a cards array is set
 			echo "No cards received";
+			exit();
+		}
 		$cardArray = array(1, count($obj["parameters"]));
 		for ($i = 0; $i < count($obj["parameters"]) ; $i++)
 			$cardArray[$i] = $obj["parameters"][$i]["cardEncode"]; // Create a local cards array
@@ -47,12 +51,19 @@ switch($obj["name"]){
 		// Shuffle cards
 		shuffle($cardArray);
 		
-		// TODO Ciphering and return		
-		echo json_encode($cardArray);
+		
+		// Encrypted cards
+		$ce = array(1, count($cardArray));
+		// TODO Ciphering and return
+		for ($i = 0; $i<count($cardArray); $i++)
+		{
+			$ce[$i] = encrypt($cardArray[$i]);
+		}
+		echo json_encode($ce);
 		break;
 	case "QUIT":
 		session_destroy();
-		echo "OK disconnected";
+		echo "OK";
 		break;
 	case "TEST":
 		/* DO NOTHING */
